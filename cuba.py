@@ -92,45 +92,46 @@ def replace(new_gen, population):
 #main
 
 def main(POP_SIZE, MUT_RATE, TARGET, GENES):
-    # 1) initialize population
-    initial_population = initialize_pop(TARGET)
-    found = False
-    population = []
-    generation = 1
-
-    # 2) Calculating the fitness for the current population
-    for _ in range(len(initial_population)):
-        population.append(fitness_cal(TARGET, initial_population[_]))
-
-    # now population has 2 things, [chromosome, fitness]
-    # 3) now we loop until TARGET is found
-    while not found:
-
-      # 3.1) select best people from current population
-      selected = selection(population, TARGET)
-
-      # 3.2) mate parents to make new generation
-      population = sorted(population, key= lambda x:x[1])
-      crossovered = crossover(selected, len(TARGET), population)
-
-      # 3.3) mutating the children to diversify the new generation
-      mutated = mutate(crossovered, MUT_RATE)
-
-      new_gen = []
-      for _ in mutated:
-          new_gen.append(fitness_cal(TARGET, _))
-
-      # 3.4) replacement of bad population with new generation
-      # we sort here first to compare the least fit population with the most fit new_gen
-
-      population = replace(new_gen, population)
-
-
-      if (population[0][1] == 0):
-        st.write('Target found')
-        st.write('String: ' + str(population[0][0]) + ' Generation: ' + str(generation) + ' Fitness: ' + str(population[0][1]))
-        break
-      st.write('String: ' + str(population[0][0]) + ' Generation: ' + str(generation) + ' Fitness: ' + str(population[0][1]))
-      generation+=1
-
-result = main(POP_SIZE, MUT_RATE, TARGET, GENES)
+    if st.button("Calculate"):
+        # 1) initialize population
+        initial_population = initialize_pop(TARGET)
+        found = False
+        population = []
+        generation = 1
+    
+        # 2) Calculating the fitness for the current population
+        for _ in range(len(initial_population)):
+            population.append(fitness_cal(TARGET, initial_population[_]))
+    
+        # now population has 2 things, [chromosome, fitness]
+        # 3) now we loop until TARGET is found
+        while not found:
+    
+          # 3.1) select best people from current population
+          selected = selection(population, TARGET)
+    
+          # 3.2) mate parents to make new generation
+          population = sorted(population, key= lambda x:x[1])
+          crossovered = crossover(selected, len(TARGET), population)
+    
+          # 3.3) mutating the children to diversify the new generation
+          mutated = mutate(crossovered, MUT_RATE)
+    
+          new_gen = []
+          for _ in mutated:
+              new_gen.append(fitness_cal(TARGET, _))
+    
+          # 3.4) replacement of bad population with new generation
+          # we sort here first to compare the least fit population with the most fit new_gen
+    
+          population = replace(new_gen, population)
+    
+    
+          if (population[0][1] == 0):
+            st.write('Target found')
+            st.write('String: ' + str(population[0][0]) + ' Generation: ' + str(generation) + ' Fitness: ' + str(population[0][1]))
+            break
+          st.write('String: ' + str(population[0][0]) + ' Generation: ' + str(generation) + ' Fitness: ' + str(population[0][1]))
+          generation+=1
+    
+    result = main(POP_SIZE, MUT_RATE, TARGET, GENES)
