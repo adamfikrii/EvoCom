@@ -3,11 +3,13 @@ from itertools import permutations, combinations
 from random import shuffle
 import random
 import numpy as np
+import statistics
+import pandas as pd
 import seaborn as sns
 import streamlit as st
 
 # Streamlit form to take user inputs
-st.title("Genetic Algorithm for Traveling Salesman Problem")
+st.title("Traveling Salesman Problem")
 
 # Input fields
 x_input = st.text_input("Enter x coordinates separated by commas (e.g., 0,3,6,7,15,10,16,5,8,1.5):")
