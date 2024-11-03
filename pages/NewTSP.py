@@ -8,52 +8,28 @@ import pandas as pd
 import seaborn as sns
 import streamlit as st
 
-# Number of cities to input
-num_cities = st.number_input("Enter the number of cities:", min_value=1, max_value=20, value=5)
+# Title and instructions
+st.title("Traveling Salesman Problem using Genetic Algorithm")
+st.write("Input city coordinates and parameters for the genetic algorithm to find the shortest path.")
 
-# Lists to store user inputs
+# User inputs for city names and coordinates
+num_cities = st.number_input("Enter number of cities:", min_value=2, max_value=20, value=5)
+cities_names = []
 x = []
 y = []
-cities_names = []
 
-# Collect coordinates and city names
 for i in range(num_cities):
-    city_name = st.text_input(f"Enter name for city {i + 1}:", key=f"city_{i}")
+    city_name = st.text_input(f"Enter name for city {i+1}:", key=f"city_{i}")
     city_x = st.number_input(f"Enter x coordinate for {city_name}:", key=f"x_{i}")
     city_y = st.number_input(f"Enter y coordinate for {city_name}:", key=f"y_{i}")
     
-    # Append to lists if city_name is provided
     if city_name:
         cities_names.append(city_name)
         x.append(city_x)
         y.append(city_y)
 
-# Display city coordinates as a dictionary
-if cities_names:
-    city_coords = dict(zip(cities_names, zip(x, y)))
-    st.subheader("City Coordinates")
-    st.write(city_coords)
-n_population = 250
-crossover_per = 0.8
-mutation_per = 0.2
-n_generations = 200
+city_coords = dict(zip(cities_names, zip(x, y)))
 
-# Pastel Pallete
-colors = sns.color_palette("pastel", len(cities_names))
-
-# City Icons
-city_icons = {
-    "Gliwice": "♕",
-    "Cairo": "♖",
-    "Rome": "♗",
-    "Krakow": "♘",
-    "Paris": "♙",
-    "Alexandria": "♔",
-    "Berlin": "♚",
-    "Tokyo": "♛",
-    "Rio": "♜",
-    "Budapest": "♝"
-}
 
 fig, ax = plt.subplots()
 
