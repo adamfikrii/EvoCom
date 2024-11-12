@@ -29,4 +29,4 @@ figure = pyplot.figure()
 axis = pyplot.axes(projection='3d') # Changed line to create 3D axes
 axis.plot_surface(x, y, results, cmap='jet')
 # show the plot
-st.pyplot.show()
+st.pyplot(fig)
