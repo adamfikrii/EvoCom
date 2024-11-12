@@ -8,7 +8,6 @@ from numpy import pi
 from numpy import meshgrid
 from matplotlib import pyplot
 from mpl_toolkits.mplot3d import Axes3D
-import streamlit as st
 
 # objective function
 def objective(x, y):
@@ -29,4 +28,4 @@ figure = pyplot.figure()
 axis = pyplot.axes(projection='3d') # Changed line to create 3D axes
 axis.plot_surface(x, y, results, cmap='jet')
 # show the plot
-st.pyplot(fig)
+st.pyplot(figure)
