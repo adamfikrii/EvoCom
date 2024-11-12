@@ -1,6 +1,6 @@
 import numpy as np
 import streamlit as st
-from numpy import exp, sqrt, cos, e, pi
+from numpy import exp, sqrt, cos, e, pi, argsort, randn, rand, seed
 from matplotlib import pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
@@ -33,12 +33,8 @@ ax.plot_surface(x, y, results, cmap='jet')
 # Display the plot in Streamlit
 st.pyplot(fig)
 
-import numpy as np
-import streamlit as st
-from numpy import exp, sqrt, cos, e, pi, argsort, randn, rand, asarray, seed
-
-# Ackley objective function
-def objective(v):
+# Redefine objective function for vector input
+def objective_vector(v):
     x, y = v
     return -20.0 * exp(-0.2 * sqrt(0.5 * (x**2 + y**2))) - exp(0.5 * (cos(2 * pi * x) + cos(2 * pi * y))) + e + 20
 
@@ -91,11 +87,11 @@ def es_comma(objective, bounds, n_iter, step_size, mu, lam):
 
     return best, best_eval
 
-# Streamlit UI
+# Streamlit UI for optimization
 st.title("Evolution Strategy Optimization of the Ackley Function")
 st.write("Using a (μ, λ) evolution strategy to minimize the Ackley function.")
 
-# Input parameters
+# Input parameters for optimization
 seed_value = st.number_input("Random Seed", value=1, step=1)
 seed(seed_value)
 
@@ -107,6 +103,6 @@ bounds = np.array([[-5.0, 5.0], [-5.0, 5.0]])
 
 # Run the optimization
 if st.button("Run Optimization"):
-    best, score = es_comma(objective, bounds, n_iter, step_size, mu, lam)
+    best, score = es_comma(objective_vector, bounds, n_iter, step_size, mu, lam)
     st.write("Optimization Complete!")
     st.write(f"Best Solution: f({best}) = {score}")
