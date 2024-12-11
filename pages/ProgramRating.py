@@ -98,9 +98,9 @@ if uploaded_file:
     genetic_schedule = genetic_algorithm(initial_schedule, GEN, POP, CO_R, MUT_R, EL_S)
     final_schedule = initial_schedule + genetic_schedule[:rem_t_slots]
 
-    # Display results
+    # Display results in table format
     st.subheader("Optimal Schedule")
-    for time_slot, program in enumerate(final_schedule):
-        st.write(f"Time Slot {all_time_slots[time_slot]:02d}:00 - Program {program}")
+    schedule_data = {"Time Slot": [f"{slot:02d}:00" for slot in all_time_slots], "Program": final_schedule}
+    st.table(schedule_data)
 
     st.write("Total Ratings:", fitness_function(final_schedule))
