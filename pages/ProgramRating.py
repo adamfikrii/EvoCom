@@ -20,7 +20,7 @@ st.title("Optimal Program Scheduling with Genetic Algorithm")
 
 # Input GitHub URL
 github_url = st.text_input("Enter the raw GitHub URL for the CSV file:", 
-                           "https://raw.githubusercontent.com/your_username/your_repo/main/program_rating.csv")
+                           "https://github.com/adamfikrii/EvoCom/blob/main/pages/program_ratings.csv")
 
 # Load the CSV file from GitHub
 if github_url:
