@@ -3,15 +3,15 @@ import csv
 import random
 
 # Function to read the CSV file and convert it to the desired format
-def read_csv_to_dict(file_path):
+def read_csv_to_dict(uploaded_file):
     program_ratings = {}
-    with open(file_path, mode='r', newline='') as file:
-        reader = csv.reader(file)
-        header = next(reader)  # Skip the header
-        for row in reader:
-            program = row[0]
-            ratings = [float(x) for x in row[1:]]  # Convert the ratings to floats
-            program_ratings[program] = ratings
+    file = uploaded_file.decode('utf-8').splitlines()
+    reader = csv.reader(file)
+    header = next(reader)  # Skip the header
+    for row in reader:
+        program = row[0]
+        ratings = [float(x) for x in row[1:]]  # Convert the ratings to floats
+        program_ratings[program] = ratings
     return program_ratings
 
 # Fitness function
@@ -75,20 +75,22 @@ st.title("Optimal Program Scheduling with Genetic Algorithm")
 # File upload
 uploaded_file = st.file_uploader("Upload the program ratings CSV file:", type="csv")
 if uploaded_file:
-    ratings = read_csv_to_dict(uploaded_file)
+    # Decode file and prepare the data
+    content = uploaded_file.read()
+    ratings = read_csv_to_dict(content)
 
     # Input parameters
     GEN = st.number_input("Generations", min_value=1, max_value=1000, value=100)
     POP = st.number_input("Population Size", min_value=1, max_value=500, value=50)
     CO_R = st.slider("Crossover Rate", min_value=0.0, max_value=0.95, value=0.8, step=0.01)
-    MUT_R = st.slider("Mutation Rate", min_value=0.01, max_value=0.05, value=0.2, step=0.01)
+    MUT_R = st.slider("Mutation Rate", min_value=0.01, max_value=0.05, value=0.02, step=0.01)
     EL_S = st.number_input("Elitism Size", min_value=1, max_value=50, value=2)
 
     # Prepare the data
     all_programs = list(ratings.keys())
     all_time_slots = list(range(6, 24))
 
-    # Brute force initial schedule
+    # Initial schedule
     initial_schedule = all_programs[:len(all_time_slots)]
     rem_t_slots = len(all_time_slots) - len(initial_schedule)
 
