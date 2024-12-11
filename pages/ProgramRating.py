@@ -9,11 +9,21 @@ def read_csv_to_dict(file_content):
     program_ratings = {}
     reader = csv.reader(file_content)
     header = next(reader)  # Skip the header
+
     for row in reader:
-        program = row[0]
-        ratings = [float(x) for x in row[1:]]  # Convert the ratings to floats
-        program_ratings[program] = ratings
+        # Skip empty rows or rows with missing program name
+        if not row or len(row) < 2:
+            continue
+
+        try:
+            program = row[0]
+            ratings = [float(x) for x in row[1:] if x.strip()]  # Convert valid ratings to floats
+            program_ratings[program] = ratings
+        except ValueError as e:
+            st.warning(f"Skipping row due to value error: {row}. Error: {e}")
+    
     return program_ratings
+
 
 # Streamlit interface
 st.title("Optimal Program Scheduling with Genetic Algorithm")
