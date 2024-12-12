@@ -31,7 +31,7 @@ ratings = program_ratings_dict
 GEN = 100
 POP = 50
 CO_R = 0.8
-MUT_R = 0.2
+MUT_R = 0.02
 EL_S = 2
 
 all_programs = list(ratings.keys()) # all programs
@@ -140,7 +140,7 @@ rem_t_slots = len(all_time_slots) - len(initial_best_schedule)
 
 # Streamlit: Take user inputs for crossover and mutation rates
 CO_R = st.slider("Crossover Rate (CO_R)", 0.0, 0.95, 0.8, 0.01)
-MUT_R = st.slider("Mutation Rate (MUT_R)", 0.01, 0.05, 0.2, 0.01)
+MUT_R = st.slider("Mutation Rate (MUT_R)", 0.01, 0.02, 0.05, 0.01)
 
 # call the genetic algorithm with user inputs
 genetic_schedule = genetic_algorithm(initial_best_schedule, generations=GEN, population_size=POP, crossover_rate=CO_R, mutation_rate=MUT_R, elitism_size=EL_S)
