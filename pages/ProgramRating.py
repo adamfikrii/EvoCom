@@ -74,7 +74,7 @@ def genetic_algorithm(initial_schedule, generations, population_size, crossover_
 st.title("Optimal Program Scheduling with Genetic Algorithm")
 
 # Load CSV from GitHub
-csv_url = "pages/program_ratings.csv"
+csv_url = "https://github.com/adamfikrii/EvoCom/blob/main/pages/program_ratings.csv"
 try:
     response = requests.get(csv_url)
     response.raise_for_status()
