@@ -74,11 +74,14 @@ def genetic_algorithm(initial_schedule, generations, population_size, crossover_
 st.title("Optimal Program Scheduling with Genetic Algorithm")
 
 # Load CSV from GitHub
-csv_url = "https://github.com/adamfikrii/EvoCom/blob/main/pages/program_ratings.csv"
+csv_url = "pages/program_ratings.csv"
 try:
     response = requests.get(csv_url)
     response.raise_for_status()
-    ratings = read_csv_to_dict(response.content)
+    
+    # Decode content from GitHub as UTF-8
+    csv_content = response.text
+    ratings = read_csv_to_dict(csv_content.encode('utf-8'))
 
     # Input parameters
     GEN = st.number_input("Generations", min_value=1, max_value=1000, value=100)
