@@ -1,12 +1,11 @@
 import streamlit as st
 import csv
 import random
-import requests
 
 # Function to read the CSV file and convert it to the desired format
-def read_csv_to_dict(file_content):
+def read_csv_to_dict(uploaded_file):
     program_ratings = {}
-    file = file_content.decode('utf-8').splitlines()
+    file = uploaded_file.decode('utf-8').splitlines()
     reader = csv.reader(file)
     header = next(reader)  # Skip the header
     for row in reader:
@@ -73,13 +72,11 @@ def genetic_algorithm(initial_schedule, generations, population_size, crossover_
 # Streamlit interface
 st.title("Optimal Program Scheduling with Genetic Algorithm")
 
-# GitHub file URL
-github_url = "pages/program_ratings.csv"
-
-# Fetch and process the CSV file
-response = requests.get(github_url)
-if response.status_code == 200:
-    content = response.content
+# File upload
+uploaded_file = st.file_uploader("Upload the program ratings CSV file:", type="csv")
+if uploaded_file:
+    # Decode file and prepare the data
+    content = uploaded_file.read()
     ratings = read_csv_to_dict(content)
 
     # Input parameters
@@ -107,5 +104,3 @@ if response.status_code == 200:
     st.table(schedule_data)
 
     st.write("Total Ratings:", fitness_function(final_schedule))
-else:
-    st.error("Failed to fetch the CSV file from GitHub. Please check the URL.")
