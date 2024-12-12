@@ -42,6 +42,14 @@ CO_R = 0.8
 MUT_R = 0.2
 EL_S = 2
 
+# Input parameters
+    GEN = st.number_input("Generations", min_value=1, max_value=1000, value=100)
+    POP = st.number_input("Population Size", min_value=1, max_value=500, value=50)
+    CO_R = st.slider("Crossover Rate", min_value=0.0, max_value=0.95, value=0.8, step=0.01)
+    MUT_R = st.slider("Mutation Rate", min_value=0.01, max_value=0.05, value=0.02, step=0.01)
+    EL_S = st.number_input("Elitism Size", min_value=1, max_value=50, value=2)
+
+
 all_programs = list(ratings.keys()) # all programs
 all_time_slots = list(range(6, 24)) # time slots
 
