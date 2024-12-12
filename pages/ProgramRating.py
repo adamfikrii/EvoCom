@@ -4,16 +4,31 @@ import random
 import requests
 
 # Function to read the CSV file and convert it to the desired format
-def read_csv_to_dict(csv_content):
+# Function to read the CSV file and convert it to the desired format
+def read_csv_to_dict(file_path):
     program_ratings = {}
-    file = csv_content.decode('utf-8').splitlines()
-    reader = csv.reader(file)
-    header = next(reader)  # Skip the header
-    for row in reader:
-        program = row[0]
-        ratings = [float(x) for x in row[1:]]  # Convert the ratings to floats
-        program_ratings[program] = ratings
+    
+    with open(file_path, mode='r', newline='') as file:
+        reader = csv.reader(file)
+        # Skip the header
+        header = next(reader)
+        
+        for row in reader:
+            program = row[0]
+            ratings = [float(x) for x in row[1:]]  # Convert the ratings to floats
+            program_ratings[program] = ratings
+    
     return program_ratings
+
+# Path to the CSV file
+file_path = 'pages/program_ratings.csv'
+
+# Get the data in the required format
+program_ratings_dict = read_csv_to_dict(file_path)
+
+# Print the result (you can also return or process it further)
+for program, ratings in program_ratings_dict.items():
+    print(f"'{program}': {ratings},")
 
 # Fitness function
 def fitness_function(schedule):
@@ -73,8 +88,7 @@ def genetic_algorithm(initial_schedule, generations, population_size, crossover_
 # Streamlit interface
 st.title("Optimal Program Scheduling with Genetic Algorithm")
 
-# Load CSV from GitHub
-csv_url = "https://github.com/adamfikrii/EvoCom/blob/main/pages/program_ratings.csv"
+
 try:
     response = requests.get(csv_url)
     response.raise_for_status()
