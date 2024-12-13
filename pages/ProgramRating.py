@@ -149,7 +149,7 @@ final_schedule = initial_best_schedule + genetic_schedule[:rem_t_slots]
 
 # Prepare the final schedule as a DataFrame for display
 schedule_table = pd.DataFrame({
-    "Time Slot": [f"{all_time_slots[time_slot]:02d}:00" for time_slot in range(len(final_schedule))],
+    "Time Slot": [f"{i + 1}: {all_time_slots[time_slot]:02d}:00" for i, time_slot in enumerate(range(len(final_schedule)))],
     "Program": final_schedule
 })
 
