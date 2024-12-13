@@ -1,7 +1,7 @@
 import streamlit as st
 import csv
 import random
-import requests
+import pandas as pd
 
 # Function to read the CSV file and convert it to the desired format
 def read_csv_to_dict(file_path):
@@ -31,7 +31,7 @@ ratings = program_ratings_dict
 GEN = 100
 POP = 50
 CO_R = 0.8
-MUT_R = 0.2
+MUT_R = 0.02
 EL_S = 2
 
 all_programs = list(ratings.keys()) # all programs
@@ -109,7 +109,7 @@ def genetic_algorithm(initial_schedule, generations=GEN, population_size=POP, cr
     for generation in range(generations):
         new_population = []
 
-        # Elitsm
+        # Elitism
         population.sort(key=lambda schedule: fitness_function(schedule), reverse=True)
         new_population.extend(population[:elitism_size])
 
@@ -147,10 +147,15 @@ genetic_schedule = genetic_algorithm(initial_best_schedule, generations=GEN, pop
 
 final_schedule = initial_best_schedule + genetic_schedule[:rem_t_slots]
 
-# Display the final schedule
-st.write("\nFinal Optimal Schedule:")
-for time_slot, program in enumerate(final_schedule):
-    st.write(f"Time Slot {all_time_slots[time_slot]:02d}:00 - Program {program}")
+# Prepare the final schedule as a DataFrame for display
+schedule_table = pd.DataFrame({
+    "Time Slot": [f"{all_time_slots[time_slot]:02d}:00" for time_slot in range(len(final_schedule))],
+    "Program": final_schedule
+})
+
+# Display the final schedule as a table
+st.write("Final Optimal Schedule:")
+st.table(schedule_table)
 
 # Display the total ratings
 st.write("Total Ratings:", fitness_function(final_schedule))
