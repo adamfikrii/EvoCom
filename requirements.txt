@@ -1,2 +1,7 @@
 matplotlib
 seaborn
+tensorflow
+streamlit
+numpy
+pandas
+pickle-mixin
