@@ -9,7 +9,7 @@ with open('tokenizer.pkl', 'rb') as f:
     tokenizer = pickle.load(f)
 
 # Define max length (should match training setup)
-max_length = 100
+max_length = 500
 
 # Streamlit App
 st.title("Fake News Detection App 📰")
